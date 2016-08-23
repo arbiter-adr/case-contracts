@@ -53,7 +53,7 @@ contract Case {
 
     function initialAcknowledgement(bytes32 _id) isOpposingParty() public returns(bool){
         CaseLibrary.Claim memory c = caseData.claims[_id];
-        if(now - c.dateIssued > config.GracePeriod()){
+        if(now - c.dateIssued > config.gracePeriod()){
             caseData.penalties[_id][msg.sender] = config.PenaltyFee(c.dateIssued);
             caseData.claims[_id].acknowledged = true;
             return true;

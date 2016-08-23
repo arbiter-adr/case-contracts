@@ -11,19 +11,23 @@ Claim is Case;
 
 
 */
-
+import "ArbiterConfig.sol";
 import "Case.sol";
 
 contract Cases {
 
-    function Cases(){}
+    ArbiterConfig internal config;
+
+    function Cases(address _config){
+      config = ArbiterConfig(_config);
+    }
 
     event NewCase(address indexed _originatingParty, address[] indexed _opposingParty, address indexed _case);
 
     address[] public cases;
 
     function newCase(address[] _opposingParties) public returns(bool){
-        Case c = new Case(msg.sender, _opposingParties);
+        Case c = new Case(msg.sender, _opposingParties, config);
         cases.push(c);
         NewCase(msg.sender, _opposingParties, c);
         return true;
